@@ -1,1 +1,1 @@
-# Do-u-Datathon
+# Doğuş Datathon
