@@ -7,20 +7,18 @@ UPDATE ek.dbo.zing
 SET path = 'Izmir'
 WHERE path like '%zmir%';
 
+ALTER TABLE ek.dbo.zing ALTER COLUMN tarih DATETIME;
+ALTER TABLE ek.dbo.ek2 ALTER COLUMN tarih DATETIME;
 
+SELECT tarih, emlak, konut_satis, ad
+FROM     ek.dbo.ek2;
 
-ALTER TABLE ek.dbo.zing alter column tarih datetime;
-ALTER TABLE ek.dbo.ek2 alter column tarih datetime;
+SELECT *
+FROM     ek.dbo.zing AS a LEFT OUTER JOIN
+                  ek.dbo.ek2 AS b ON a.path = b.ad
+WHERE  (MONTH(a.tarih) = MONTH(b.tarih)) AND (YEAR(a.tarih) = YEAR(b.tarih));
 
-
-select * from ek.dbo.ek2;
-
-select *
-from ek.dbo.zing a
-left join ek.dbo.ek2 b on a.path = b.ad
-where  month(a.tarih) = month(b.tarih) and year(a.tarih) = year(b.tarih);
-
-test modification
+--modification
 
 UPDATE ek2.dbo.zing2
 SET path = 'Istanbul'
@@ -29,17 +27,17 @@ WHERE path like '%stanb%';
 UPDATE ek2.dbo.zing2
 SET path = 'Izmir'
 WHERE path like '%zmir%';
-
-
-
-ALTER TABLE ek2.dbo.zing2 alter column tarih datetime;
-ALTER TABLE ek2.dbo.ekler2 alter column tarih datetime;
+  
+ALTER TABLE ek2.dbo.zing2 ALTER COLUMN tarih DATETIME;
+ALTER TABLE ek2.dbo.ekler2 ALTER COLUMN tarih DATETIME;
 
 UPDATE ek2.dbo.ekler2
   SET tarih = DATEADD(YEAR, +1, tarih);
 
-select * from ek2.dbo.ekler2;
+SELECT tarih, emlak, konut_satis, ad
+FROM     ek2.dbo.ekler2;
 
-select * from ek2.dbo.zing2 c
-left join ek2.dbo.ekler2 d on c.path = d.ad
-where  month(c.tarih) = month(d.tarih) and year(c.tarih) = year(d.tarih);
+SELECT *
+FROM     ek2.dbo.zing2 AS c LEFT OUTER JOIN
+                  ek2.dbo.ekler2 AS d ON c.path = d.ad
+WHERE  (MONTH(c.tarih) = MONTH(d.tarih)) AND (YEAR(c.tarih) = YEAR(d.tarih));
